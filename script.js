@@ -68,4 +68,82 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         typeWriter();
     });
+
+    // 添加音乐自动播放
+    const bgMusic = document.getElementById('bgMusic');
+    
+    // 监听用户交互以开始播放音乐
+    document.addEventListener('click', () => {
+        bgMusic.play().catch(error => console.log("播放失败：", error));
+    }, { once: true });
+
+    // 金元宝动画
+    const canvas = document.getElementById('goldCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 设置canvas尺寸
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // 金元宝类
+    class GoldIngot {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = -30;
+            this.speed = 1 + Math.random() * 2;
+            this.size = 20 + Math.random() * 20;
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+        }
+
+        update() {
+            this.y += this.speed;
+            this.rotation += this.rotationSpeed;
+            if (this.y > canvas.height) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            
+            // 绘制金元宝
+            ctx.beginPath();
+            ctx.fillStyle = '#FFD700';
+            ctx.moveTo(-this.size/2, 0);
+            ctx.quadraticCurveTo(0, -this.size/2, this.size/2, 0);
+            ctx.quadraticCurveTo(0, this.size/2, -this.size/2, 0);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+    }
+
+    // 创建多个金元宝
+    const goldIngots = Array.from({ length: 20 }, () => new GoldIngot());
+
+    // 动画循环
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        goldIngots.forEach(ingot => {
+            ingot.update();
+            ingot.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 });
