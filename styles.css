@@ -7,18 +7,26 @@ body {
     align-items: center;
     background: #f5e6c3;
     font-family: "Microsoft YaHei", sans-serif;
+    overflow: hidden;
 }
 
 .container {
     text-align: center;
     position: relative;
     z-index: 1;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
 }
 
 .god-image {
     width: 200px;
     height: auto;
     margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #fortune-button {
@@ -38,18 +46,9 @@ body {
 
 .fortune-result {
     margin-top: 20px;
-    font-size: 18px;
+    font-size: 20px;
     color: #d4af37;
     min-height: 30px;
-    line-height: 1.6;
-    white-space: pre-line;
-    text-align: left;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
 }
 
 #effect-layer {
